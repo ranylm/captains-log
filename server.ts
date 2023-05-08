@@ -28,12 +28,12 @@ app.use((req, res, next) => {
   next();
 });
 
-import logs from "./routes/captain";
+import logs from "./controllers/log";
 // Routes
-app.use("/captain", logs);
+app.use("/log", logs);
 
 //Seed database
-import Log from "./controllers/logs";
+import Log from "./api/logs";
 import { ILog } from "./models/logs";
 import seed from "./models/seed";
 //@ts-ignore

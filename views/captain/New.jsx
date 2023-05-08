@@ -7,10 +7,10 @@ export default class New extends Component {
     return (
       <>
         <h1>Create new Log</h1>
-        <form action="./create" method="POST">
+        <form action="./" method="POST">
           Title: <input type="text" name="title" />
           <br />
-          Entry: <input type="text" name="entry" />
+          Entry: <input type="textarea" name="entry" />
           <br />
           Ship broken:
           <input type="checkbox" name="shipIsBroken" />

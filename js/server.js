@@ -27,11 +27,11 @@ app.use((req, res, next) => {
     console.log("Middleware running...");
     next();
 });
-const captain_1 = __importDefault(require("./routes/captain"));
+const log_1 = __importDefault(require("./controllers/log"));
 // Routes
-app.use("/captain", captain_1.default);
+app.use("/log", log_1.default);
 //Seed database
-const logs_1 = __importDefault(require("./controllers/logs"));
+const logs_1 = __importDefault(require("./api/logs"));
 const seed_1 = __importDefault(require("./models/seed"));
 //@ts-ignore
 app.get("/seed", async (req, res) => {

@@ -3,7 +3,7 @@ import { Schema, model } from "mongoose";
 export interface ILog {
   title: string;
   entry: string;
-  shipisBroken: boolean;
+  shipIsBroken: boolean;
 }
 
 const logSchema: Schema = new Schema(

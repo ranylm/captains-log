@@ -5,25 +5,25 @@ export default async function seed() {
     await log.create({
       title: "captain",
       entry: "Lost",
-      shipisBroken: false,
+      shipIsBroken: false,
     } as ILog);
 
     await log.create({
       title: "captain",
       entry: "Lost",
-      shipisBroken: false,
+      shipIsBroken: false,
     } as ILog);
 
     await log.create({
       title: "captain",
       entry: "Engines Shut down",
-      shipisBroken: true,
+      shipIsBroken: true,
     } as ILog);
 
     await log.create({
       title: "captain",
       entry: "deadend",
-      shipisBroken: true,
+      shipIsBroken: true,
     } as ILog);
   } catch (err: any) {}
 }
