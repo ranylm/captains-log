@@ -27,17 +27,22 @@ app.use((req, res, next) => {
     console.log("Middleware running...");
     next();
 });
-const log_1 = __importDefault(require("./controllers/log"));
 // Routes
+const log_1 = __importDefault(require("./controllers/log"));
+const foodlog_1 = __importDefault(require("./controllers/foodlog"));
 app.use("/log", log_1.default);
+app.use("/foodlog", foodlog_1.default);
 //Seed database
 const logs_1 = __importDefault(require("./api/logs"));
-const seed_1 = __importDefault(require("./models/seed"));
+const foodlogs_1 = __importDefault(require("./api/foodlogs"));
+const seed_1 = require("./models/seed");
 //@ts-ignore
 app.get("/seed", async (req, res) => {
     try {
         const data = await logs_1.default.getLogs();
-        data.length === 0 ? (0, seed_1.default)() : undefined;
+        data.length === 0 ? (0, seed_1.seed)() : undefined;
+        const data2 = await foodlogs_1.default.getLogs();
+        data2.length === 0 ? (0, seed_1.seed2)() : undefined;
         res.status(200).send("seeded");
     }
     catch (err) { }
@@ -47,8 +52,8 @@ app.get("/*", (req, res) => {
     res.status(404).send(`
     <div>
       404 this page doesn't exist! <br />
-      <a href="/fruits">Fruit</a> <br />
-      <a href="/vegetables">Vegetables</a>
+      <a href="/log">Captains Logs</a> <br />
+      <a href="/foodlog">Food Logs</a>
     </div
   `);
 });
