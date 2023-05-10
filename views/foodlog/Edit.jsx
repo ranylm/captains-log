@@ -6,7 +6,7 @@ export default class Edit extends Component {
     return (
       <>
         <div>Edit</div>
-        <form action={`/log/?_method=PUT`} method="post">
+        <form action={`../?_method=PUT`} method="post">
           Log ID :
           <input
             type="text"
@@ -18,12 +18,8 @@ export default class Edit extends Component {
           <input type="text" name="title" value={log.title} />
           Entry:
           <input type="textarea" name="entry" value={log.entry} />
-          Is Ship Broken?{" "}
-          <input
-            type="checkbox"
-            name="shipIsBroken"
-            defaultChecked={log.shipIsBroken}
-          />
+          Remaining Ratios{" "}
+          <input type="number" name="rations" min={0} value={log.rations} />
           <input type="submit" value="Save" />
         </form>
       </>

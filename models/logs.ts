@@ -4,13 +4,15 @@ export interface ILog {
   title: string;
   entry: string;
   shipIsBroken: boolean;
+  comments: Schema.Types.ObjectId[];
 }
 
-const logSchema: Schema = new Schema(
+const logSchema: Schema = new Schema<ILog>(
   {
     title: String,
     entry: String,
     shipIsBroken: { type: Boolean, default: true },
+    comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
   },
   { timestamps: true }
 );

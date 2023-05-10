@@ -1,32 +1,32 @@
 import express from "express";
 const router = express.Router();
-import Log from "../api/logs";
-import Comment from "../api/comment";
-// import comment from "./api/comment";
+import Log from "../api/foodlogs";
 
 // List all logs
 router.get("/", async (req, res) => {
   try {
     const data = await Log.getLogs();
     console.log(data);
-    res.render("captain/Index", { data: data });
+    res.render("foodlog/Index", { data: data });
   } catch (err) {
     res.status(400).send(err);
   }
 });
+
 // Log creation interface
 router.get("/new", async (req, res) => {
   try {
-    res.render("captain/New");
+    res.render("foodlog/New");
   } catch (err) {
     res.status(400).send(err);
   }
 });
+
 // Display log info
 router.get("/:id", async (req, res) => {
   try {
     const data = await Log.getLogById(req.params.id);
-    res.render("captain/Show", { data: data });
+    res.render("foodlog/Show", { data: data });
   } catch (err) {
     res.status(400).send(err);
   }
@@ -36,7 +36,7 @@ router.get("/:id", async (req, res) => {
 router.get("/edit/:id", async (req, res) => {
   try {
     const data = await Log.getLogById(req.params.id);
-    res.render("captain/Edit", { data: data });
+    res.render("foodlog/Edit", { data: data });
   } catch (err) {
     res.status(400).send(err);
   }
@@ -45,12 +45,10 @@ router.get("/edit/:id", async (req, res) => {
 // POST new log
 router.post("/", async (req, res) => {
   try {
-    const shipIsBroken = req.body.shipIsBroken ? true : false;
     const data = await Log.createLog({
       ...req.body,
-      shipIsBroken: shipIsBroken,
     });
-    res.redirect("./");
+    res.redirect("/foodlog");
   } catch (err) {
     res.status(400).send(err);
   }
@@ -59,14 +57,12 @@ router.post("/", async (req, res) => {
 // PUT Edit log
 router.put("/", async (req, res) => {
   try {
-    const shipIsBroken = req.body.shipIsBroken ? true : false;
     const data = await Log.updateLog(req.body.id, {
       title: req.body.title,
       entry: req.body.entry,
-      shipIsBroken: shipIsBroken,
-      comments: [],
+      rations: req.body.rations ?? 0,
     });
-    res.redirect(`./${req.body.id}`);
+    res.redirect(`/foodlog/${req.body.id}`);
   } catch (err) {
     res.status(400).send(err);
   }
@@ -77,21 +73,7 @@ router.delete("/:id", async (req, res) => {
   try {
     console.log(req.params.id);
     const data = await Log.deleteLog(req.params.id);
-    res.redirect("./");
-  } catch (err) {
-    res.status(400).send(err);
-  }
-});
-
-router.post("/:id/comment", async (req, res) => {
-  try {
-    console.log("new comment", req.params.id);
-    const comment = await Comment.createComment(req.body);
-    // const log = await Log.getLogById(req.params.id)
-    const data = await Log.updateLog(req.params.id, {
-      $push: { comments: comment },
-    });
-    res.redirect("./");
+    res.redirect("/foodlog");
   } catch (err) {
     res.status(400).send(err);
   }

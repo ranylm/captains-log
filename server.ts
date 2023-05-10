@@ -28,19 +28,25 @@ app.use((req, res, next) => {
   next();
 });
 
-import logs from "./controllers/log";
 // Routes
+import logs from "./controllers/log";
+import foodlogs from "./controllers/foodlog";
 app.use("/log", logs);
+app.use("/foodlog", foodlogs);
 
 //Seed database
 import Log from "./api/logs";
 import { ILog } from "./models/logs";
-import seed from "./models/seed";
+import FoodLog from "./api/foodlogs";
+import { IFoodLog } from "./models/foodlogs";
+import { seed, seed2 } from "./models/seed";
 //@ts-ignore
 app.get("/seed", async (req, res) => {
   try {
     const data: ILog[] = await Log.getLogs();
     data.length === 0 ? seed() : undefined;
+    const data2: IFoodLog[] = await FoodLog.getLogs();
+    data2.length === 0 ? seed2() : undefined;
     res.status(200).send("seeded");
   } catch (err) {}
 });
@@ -50,8 +56,8 @@ app.get("/*", (req, res) => {
   res.status(404).send(`
     <div>
       404 this page doesn't exist! <br />
-      <a href="/fruits">Fruit</a> <br />
-      <a href="/vegetables">Vegetables</a>
+      <a href="/log">Captains Logs</a> <br />
+      <a href="/foodlog">Food Logs</a>
     </div
   `);
 });

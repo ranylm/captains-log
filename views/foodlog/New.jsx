@@ -6,14 +6,14 @@ export default class New extends Component {
   render() {
     return (
       <>
-        <h1>Create new Log</h1>
-        <form action="/log" method="POST">
+        <h1>Create new Food Log</h1>
+        <form action="/foodlog" method="POST">
           Title: <input type="text" name="title" />
           <br />
           Entry: <input type="textarea" name="entry" />
           <br />
-          Ship broken:
-          <input type="checkbox" name="shipIsBroken" />
+          Rations Remaining:
+          <input type="number" name="rations" min={0} />
           <br />
           <input type="submit" value="Save Log" />
         </form>

@@ -1,4 +1,4 @@
-import { Error, ObjectId } from "mongoose";
+import { Error, ObjectId, UpdateQuery } from "mongoose";
 import logs from "../models/logs";
 
 import Log, { ILog } from "../models/logs";
@@ -12,7 +12,7 @@ const getLogs = async (): Promise<tLogs> => {
 };
 
 const getLogById = async (id: string): Promise<tLog> => {
-  const data: ILog | null = await Log.findById(id);
+  const data: ILog | null = await Log.findById(id).populate("comments");
   return data;
 };
 
@@ -21,7 +21,7 @@ const createLog = async (log: ILog): Promise<tLog> => {
   return data;
 };
 
-const updateLog = async (id: string, log: ILog): Promise<tLog> => {
+const updateLog = async (id: string, log: UpdateQuery<ILog>): Promise<tLog> => {
   const data: ILog | null = await Log.findByIdAndUpdate(id, log);
   return data;
 };
